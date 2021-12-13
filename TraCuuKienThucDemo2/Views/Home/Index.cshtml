@@ -8,12 +8,12 @@
     <div class="input-group mb-3">
         <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Tuỳ chọn tìm kiếm</button>
         <ul class="dropdown-menu" style="margin: 0px;">
-            <li><a class="dropdown-item" href="#">Nội dung</a></li>
-            <li><a class="dropdown-item" href="#">Khái niệm</a></li>
+            <li><a class="dropdown-item" href="#" onclick="searchByNoiDung()">Nội dung</a></li>
+            <li><a class="dropdown-item" href="#" onclick="searchByKhaiNiem()">Khái niệm</a></li>
             <li>
-                <a class="dropdown-item" href="#">Dạng bài tập</a>
+                <a class="dropdown-item" href="#" onclick="searchByDangBT()">Dạng bài tập</a>
             </li>
-            <li><a class="dropdown-item" href="#">Phương pháp</a></li>
+            <li><a class="dropdown-item" href="#" onclick="searchByPhuongPhap()">Phương pháp</a></li>
         </ul>
         <input id="searchKey" type="text" class="form-control" aria-label="Text input with dropdown button">
     </div>    
@@ -106,7 +106,9 @@
     </ul>
 }
 
+<div id="content">
 @Html.Raw(Model.NoiDung)
+</div>
 
 @section scripts
 {
@@ -340,6 +342,46 @@
             },
             error: function (message) {
                 alert(message.responseText);
+            }
+        });
+    }
+
+    //Tìm kiếm bằng nội dung
+    function searchByNoiDung() {
+        var searchKey = $('#searchKey').val();
+        //Delete dữ liệu hiện tại và tiến hành search lại dữ liệu
+        $('#content').html("");
+        $.ajax({
+            url: "/Home/SearchByNoiDung",
+            data: { 'searchKey': searchKey },
+            type: "POST",
+            success: function (result) {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html +=
+                        '<section class="section">'
+                    +'<div class="card">'
+                    + '<div class="card-header">'
+                    + '<a href=' + '/Home/Index/' + item.ID + '>'  
+                    + '<h4 class="card-title">' + item.TieuDe + '</h4>'
+                    + '</a>'
+                    +   '</div>'
+                    +   '<div class="card-body">'
+                    @*+       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, commodi? Ullam quaerat'
+                    +       'similique iusto'
+                    +       'temporibus, vero aliquam praesentium, odit deserunt eaque nihil saepe hic deleniti? Placeat'
+                    +       'delectus'
+                    +       'quibusdam ratione ullam!'*@
+                        + item.NoiDung
+                    +   '</div>'
+                    + '</div>'
+                    +'</section>';
+                });
+                $('#content').html(html);
+                //alert(result);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
             }
         });
     }

@@ -27,5 +27,18 @@ namespace TraCuuKienThucDemo2.Controllers
                         }).ToList();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult SearchByNoiDung(string searchKey)
+        {
+            var result = db.DataAIs.Where(d => d.NoiDung.Contains(searchKey) || searchKey == null).ToList();
+            var data = (from d in result
+                        select new
+                        {
+                            ID = d.ID,
+                            TieuDe = d.TieuDe,
+                            NoiDung = d.NoiDung.Substring(0, 225) + " ..."
+                        }).ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
     }
 }
