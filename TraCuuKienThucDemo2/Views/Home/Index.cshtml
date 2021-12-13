@@ -1,0 +1,347 @@
+﻿@model TraCuuKienThucDemo2.Models.DataAI
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section SearchBar{
+    <div class="input-group mb-3">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Tuỳ chọn tìm kiếm</button>
+        <ul class="dropdown-menu" style="margin: 0px;">
+            <li><a class="dropdown-item" href="#">Nội dung</a></li>
+            <li><a class="dropdown-item" href="#">Khái niệm</a></li>
+            <li>
+                <a class="dropdown-item" href="#">Dạng bài tập</a>
+            </li>
+            <li><a class="dropdown-item" href="#">Phương pháp</a></li>
+        </ul>
+        <input id="searchKey" type="text" class="form-control" aria-label="Text input with dropdown button">
+    </div>    
+}
+@section LeftMenu{
+
+    <ul class="menu">
+        <li class="sidebar-title">Cây kiến thức</li>
+        <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+                <i class="bi bi-stack"></i>
+                <span>Cấu trúc dữ liệu và giải thuật</span>
+            </a>
+            <ul class="submenu " id="CTDLVGT">
+            </ul>
+        </li>
+        <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+                <i class="bi bi-stack"></i>
+                <span>Một số khái niệm về giải thuật</span>
+            </a>
+            <ul class="submenu " id="MSKNVGT">
+            </ul>
+        </li>
+        <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+                <i class="bi bi-stack"></i>
+                <span>Cấu trúc dữ liệu mảng</span>
+            </a>
+            <ul class="submenu " id="CTDLM">
+            </ul>
+        </li>
+        <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+                <i class="bi bi-stack"></i>
+                <span>Danh sách liên kết</span>
+            </a>
+            <ul class="submenu " id="DSLK">
+            </ul>
+        </li>
+        <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+                <i class="bi bi-stack"></i>
+                <span>Ngăn xếp và hàng đợi</span>
+            </a>
+            <ul class="submenu " id="NXVHD">
+            </ul>
+        </li>
+        <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+                <i class="bi bi-stack"></i>
+                <span>Một số giải thuật tìm kiếm</span>
+            </a>
+            <ul class="submenu " id="MSGTTK">
+            </ul>
+        </li>
+        <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+                <i class="bi bi-stack"></i>
+                <span>Một số giải thuật sắp xếp</span>
+            </a>
+            <ul class="submenu " id="MSGTSX">
+            </ul>
+        </li>
+        <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+                <i class="bi bi-stack"></i>
+                <span>Cấu trúc dữ liệu đồ thị</span>
+            </a>
+            <ul class="submenu " id="CTDLDT">
+            </ul>
+        </li>
+        <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+                <i class="bi bi-stack"></i>
+                <span>Cấu trúc dữ cây</span>
+            </a>
+            <ul class="submenu " id="CTDLC">
+            </ul>
+        </li>
+        <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+                <i class="bi bi-stack"></i>
+                <span>Đệ qui</span>
+            </a>
+            <ul class="submenu " id="DQ">
+            </ul>
+        </li>
+
+    </ul>
+}
+
+@Html.Raw(Model.NoiDung)
+
+@section scripts
+{
+<script>
+    $(document).ready(function () {
+        loadCTDLVGT();
+        loadMSKNVGT();
+        loadCTDLM();
+        loadDSLK();
+        loadNXVHD();
+        loadMSGTTK();
+        loadMSGTSX();
+        loadCTDLDT();
+        loadCTDLC();
+        loadDQ();
+    });
+
+    //Load Cấu trúc dữ liệu và giải thuật
+    function loadCTDLVGT() {
+        $.ajax({
+            url: "/Home/ListMenu",
+            data: { chuong: "Cấu trúc dữ liệu và giải thuật" },
+            type: "post",
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    var html = '';
+                    html += '<li class="submenu-item ">';
+                    html += '<a href=' + '/Home/Index/' + item.ID + '>' + item.TieuDe + '</a>';
+                    html += '</li>';
+                    $('#CTDLVGT').append(html);
+                });
+                //alert(result);
+            },
+            error: function (message) {
+                alert(message.responseText);
+            }
+        });
+    }
+
+    //Load một số khái niệm về giải thuật
+    function loadMSKNVGT() {
+        $.ajax({
+            url: "/Home/ListMenu",
+            data: { chuong: "Một số khái niệm về giải thuật" },
+            type: "post",
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    var html = '';
+                    html += '<li class="submenu-item ">';
+                    html += '<a href=' + '/Home/Index/' + item.ID + '>' + item.TieuDe + '</a>';
+                    html += '</li>';
+                    $('#MSKNVGT').append(html);
+                });
+                //alert(result);
+            },
+            error: function (message) {
+                alert(message.responseText);
+            }
+        });
+    }
+
+    //Load cấu trúc dữ liệu mảng
+    function loadCTDLM() {
+        $.ajax({
+            url: "/Home/ListMenu",
+            data: { chuong: "Cấu trúc dữ liệu mảng" },
+            type: "post",
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    var html = '';
+                    html += '<li class="submenu-item ">';
+                    html += '<a href=' + '/Home/Index/' + item.ID + '>' + item.TieuDe + '</a>';
+                    html += '</li>';
+                    $('#CTDLM').append(html);
+                });
+                //alert(result);
+            },
+            error: function (message) {
+                alert(message.responseText);
+            }
+        });
+    }
+
+    //Load danh sách liên kết
+    function loadDSLK() {
+        $.ajax({
+            url: "/Home/ListMenu",
+            data: { chuong: "Danh sách liên kết" },
+            type: "post",
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    var html = '';
+                    html += '<li class="submenu-item ">';
+                    html += '<a href=' + '/Home/Index/' + item.ID + '>' + item.TieuDe + '</a>';
+                    html += '</li>';
+                    $('#DSLK').append(html);
+                });
+                //alert(result);
+            },
+            error: function (message) {
+                alert(message.responseText);
+            }
+        });
+    }
+
+    //Load ngăn xếp và hàng đợi
+    function loadNXVHD() {
+        $.ajax({
+            url: "/Home/ListMenu",
+            data: { chuong: "Ngăn xếp và hàng đợi" },
+            type: "post",
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    var html = '';
+                    html += '<li class="submenu-item ">';
+                    html += '<a href=' + '/Home/Index/' + item.ID + '>' + item.TieuDe + '</a>';
+                    html += '</li>';
+                    $('#NXVHD').append(html);
+                });
+                //alert(result);
+            },
+            error: function (message) {
+                alert(message.responseText);
+            }
+        });
+    }
+
+    //Load một số giải thuật tìm kiếm
+    function loadMSGTTK() {
+        $.ajax({
+            url: "/Home/ListMenu",
+            data: { chuong: "Một số giải thuật tìm kiếm" },
+            type: "post",
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    var html = '';
+                    html += '<li class="submenu-item ">';
+                    html += '<a href=' + '/Home/Index/' + item.ID + '>' + item.TieuDe + '</a>';
+                    html += '</li>';
+                    $('#MSGTTK').append(html);
+                });
+                //alert(result);
+            },
+            error: function (message) {
+                alert(message.responseText);
+            }
+        });
+    }
+
+    //Load một số giải thuật sắp xếp
+    function loadMSGTSX() {
+        $.ajax({
+            url: "/Home/ListMenu",
+            data: { chuong: "Một số giải thuật sắp xếp" },
+            type: "post",
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    var html = '';
+                    html += '<li class="submenu-item ">';
+                    html += '<a href=' + '/Home/Index/' + item.ID + '>' + item.TieuDe + '</a>';
+                    html += '</li>';
+                    $('#MSGTSX').append(html);
+                });
+                //alert(result);
+            },
+            error: function (message) {
+                alert(message.responseText);
+            }
+        });
+    }
+
+    //Load cấu trúc dữ liệu đồ thị
+    function loadCTDLDT() {
+        $.ajax({
+            url: "/Home/ListMenu",
+            data: { chuong: "Cấu trúc dữ liệu đồ thị" },
+            type: "post",
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    var html = '';
+                    html += '<li class="submenu-item ">';
+                    html += '<a href=' + '/Home/Index/' + item.ID + '>' + item.TieuDe + '</a>';
+                    html += '</li>';
+                    $('#CTDLDT').append(html);
+                });
+                //alert(result);
+            },
+            error: function (message) {
+                alert(message.responseText);
+            }
+        });
+    }
+
+    //Load cấu trúc dữ liệu cây
+    function loadCTDLC() {
+        $.ajax({
+            url: "/Home/ListMenu",
+            data: { chuong: "Cấu trúc dữ liệu cây" },
+            type: "post",
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    var html = '';
+                    html += '<li class="submenu-item ">';
+                    html += '<a href=' + '/Home/Index/' + item.ID + '>' + item.TieuDe + '</a>';
+                    html += '</li>';
+                    $('#CTDLC').append(html);
+                });
+                //alert(result);
+            },
+            error: function (message) {
+                alert(message.responseText);
+            }
+        });
+    }
+
+    //Load đệ qui
+    function loadDQ() {
+        $.ajax({
+            url: "/Home/ListMenu",
+            data: { chuong: "Đệ qui" },
+            type: "post",
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    var html = '';
+                    html += '<li class="submenu-item ">';
+                    html += '<a href=' + '/Home/Index/' + item.ID + '>' + item.TieuDe + '</a>';
+                    html += '</li>';
+                    $('#DQ').append(html);
+                });
+                //alert(result);
+            },
+            error: function (message) {
+                alert(message.responseText);
+            }
+        });
+    }
+</script>
+}
