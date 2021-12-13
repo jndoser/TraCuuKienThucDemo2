@@ -108,6 +108,27 @@
 
 <div id="content">
 @Html.Raw(Model.NoiDung)
+    <div class="col-lg-6 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Có thể bạn sẽ thích</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="list-group">
+                        @foreach (TraCuuKienThucDemo2.Models.DataAI item in ViewBag.lstKTLienQuan)
+                        {
+                            <a href='/Home/Index/@item.ID'>
+                            <div type="button" class="list-group-item list-group-item-action">
+                                @item.TieuDe
+                            </div>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section scripts
@@ -376,6 +397,111 @@
                     +   '</div>'
                     + '</div>'
                     +'</section>';
+                });
+                $('#content').html(html);
+                //alert(result);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    //Tìm kiếm bằng khái niệm
+    function searchByKhaiNiem() {
+        var searchKey = $('#searchKey').val();
+        //Delete dữ liệu hiện tại và tiến hành search lại dữ liệu
+        $('#content').html("");
+        $.ajax({
+            url: "/Home/SearchByKhaiNiem",
+            data: { 'searchKey': searchKey },
+            type: "POST",
+            success: function (result) {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html +=
+                        '<section class="section">'
+                        + '<div class="card">'
+                        + '<div class="card-header">'
+                        + '<a href=' + '/Home/Index/' + item.ID + '>'
+                        + '<h4 class="card-title">' + item.TieuDe + '</h4>'
+                        + '</a>'
+                        + '</div>'
+                        + '<div class="card-body">'
+                        + item.NoiDung
+                        + '</div>'
+                        + '</div>'
+                        + '</section>';
+                });
+                $('#content').html(html);
+                //alert(result);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    //Tìm kiếm bằng dạng bài tập
+    function searchByDangBT() {
+        var searchKey = $('#searchKey').val();
+        //Delete dữ liệu hiện tại và tiến hành search lại dữ liệu
+        $('#content').html("");
+        $.ajax({
+            url: "/Home/SearchByDangBT",
+            data: { 'searchKey': searchKey },
+            type: "POST",
+            success: function (result) {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html +=
+                        '<section class="section">'
+                        + '<div class="card">'
+                        + '<div class="card-header">'
+                        + '<a href=' + '/Home/Index/' + item.ID + '>'
+                        + '<h4 class="card-title">' + item.TieuDe + '</h4>'
+                        + '</a>'
+                        + '</div>'
+                        + '<div class="card-body">'
+                        + item.NoiDung
+                        + '</div>'
+                        + '</div>'
+                        + '</section>';
+                });
+                $('#content').html(html);
+                //alert(result);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    //Tìm kiếm bằng phương pháp
+    function searchByPhuongPhap() {
+        var searchKey = $('#searchKey').val();
+        //Delete dữ liệu hiện tại và tiến hành search lại dữ liệu
+        $('#content').html("");
+        $.ajax({
+            url: "/Home/SearchByPhuongPhap",
+            data: { 'searchKey': searchKey },
+            type: "POST",
+            success: function (result) {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html +=
+                        '<section class="section">'
+                        + '<div class="card">'
+                        + '<div class="card-header">'
+                        + '<a href=' + '/Home/Index/' + item.ID + '>'
+                        + '<h4 class="card-title">' + item.TieuDe + '</h4>'
+                        + '</a>'
+                        + '</div>'
+                        + '<div class="card-body">'
+                        + item.NoiDung
+                        + '</div>'
+                        + '</div>'
+                        + '</section>';
                 });
                 $('#content').html(html);
                 //alert(result);
